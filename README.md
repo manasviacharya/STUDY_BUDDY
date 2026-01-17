@@ -139,48 +139,71 @@ Example (deck-service/.env):
 
 env
 Copy code
+
 PORT=3002
+
 DB_HOST=localhost
+
 DB_USER=root
+
 DB_PASSWORD=yourpassword
+
 DB_NAME=Study_Buddy
+
 USER_SERVICE_URL=http://localhost:3001
+
 FRONTEND_URL=http://localhost:3000
+
 NODE_ENV=development
+
 ⚠️ Ensure DB_NAME and FRONTEND_URL are identical across all services.
 
 ## 4️⃣ Install Dependencies
 bash
 Copy code
+
 cd services/user-service && npm install
+
 cd ../deck-service && npm install
+
 cd ../sharing-service && npm install
+
 cd ../../frontend && npm install
 
 ## 5️⃣ Run the Application (Order Matters)
 bash
 Copy code
+
 Terminal 1 – User Service
+```bash
 cd services/user-service
 node server.js
+```
 
 Terminal 2 – Deck Service
+```bash
 cd services/deck-service
 node server.js
+```
 
 Terminal 3 – Sharing Service
+```bash
 cd services/sharing-service
 node server.js
+```
 
 Terminal 4 – Frontend
+```bash
 cd frontend
 npm start
+```
 
 ## 6️⃣ Health Check
 Open in browser:
 
 bash
 Copy code
+
 http://localhost:3001/health
 http://localhost:3002/health
 http://localhost:3004/health
@@ -189,16 +212,6 @@ Expected response:
 json
 Copy code
 { "status": "ok" }
-
-## 🧪 API Testing (Postman)
-Import the provided Postman collection:
-
-pgsql
-Copy code
-postman/Study_Buddy_API.postman_collection.json
-Always run Login first to establish a session
-
-The collection automatically syncs cookies across services
 
 ## 🔐 Security Highlights
 HTTP-only session cookies
