@@ -74,7 +74,7 @@ The project strictly follows a **clean microservice architecture**, with each se
 ---
 
 ## 🗂️ Project Structure
-
+```text
 Study_Buddy/
 ├── frontend/
 │ ├── src/
@@ -97,7 +97,7 @@ Study_Buddy/
 │ └── Study_Buddy_API.postman_collection.json
 │
 └── README.md
-
+```
 ---
 
 ## 🗄️ Database Design
@@ -130,7 +130,9 @@ bash
 Copy code
 mysql -u root -p Study_Buddy < database/schema.sql
 mysql -u root -p Study_Buddy < database/seed.sql
-3️⃣ Environment Variables
+```
+
+## 3️⃣ Environment Variables
 Create a .env file inside each service folder.
 
 Example (deck-service/.env):
@@ -147,14 +149,15 @@ FRONTEND_URL=http://localhost:3000
 NODE_ENV=development
 ⚠️ Ensure DB_NAME and FRONTEND_URL are identical across all services.
 
-4️⃣ Install Dependencies
+## 4️⃣ Install Dependencies
 bash
 Copy code
 cd services/user-service && npm install
 cd ../deck-service && npm install
 cd ../sharing-service && npm install
 cd ../../frontend && npm install
-5️⃣ Run the Application (Order Matters)
+
+## 5️⃣ Run the Application (Order Matters)
 bash
 Copy code
 # Terminal 1 – User Service
@@ -172,7 +175,8 @@ node server.js
 # Terminal 4 – Frontend
 cd frontend
 npm start
-6️⃣ Health Check
+
+## 6️⃣ Health Check
 Open in browser:
 
 bash
@@ -195,7 +199,7 @@ Always run Login first to establish a session
 
 The collection automatically syncs cookies across services
 
-🔐 Security Highlights
+## 🔐 Security Highlights
 HTTP-only session cookies
 
 sameSite=lax cookie policy
@@ -204,7 +208,7 @@ Centralized authentication via User Service
 
 Permission-based access control for shared decks
 
-📈 Design Principles
+## 📈 Design Principles
 Separation of concerns using microservices
 
 Stateless services except authentication source
@@ -213,7 +217,7 @@ RESTful API design with consistent response formats
 
 Frontend kept lightweight and maintainable
 
-🔮 Future Enhancements
+## 🔮 Future Enhancements
 Collections and favorites
 
 Advanced search and analytics
@@ -224,8 +228,8 @@ Docker-based deployment
 
 Role-based access control
 
-👤 Author
+## 👤 Author
 Manasvi Acharya
 
-📄 License
+## 📄 License
 This project is licensed under the MIT License.
