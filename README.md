@@ -160,19 +160,19 @@ cd ../../frontend && npm install
 ## 5️⃣ Run the Application (Order Matters)
 bash
 Copy code
-# Terminal 1 – User Service
+Terminal 1 – User Service
 cd services/user-service
 node server.js
 
-# Terminal 2 – Deck Service
+Terminal 2 – Deck Service
 cd services/deck-service
 node server.js
 
-# Terminal 3 – Sharing Service
+Terminal 3 – Sharing Service
 cd services/sharing-service
 node server.js
 
-# Terminal 4 – Frontend
+Terminal 4 – Frontend
 cd frontend
 npm start
 
@@ -189,7 +189,8 @@ Expected response:
 json
 Copy code
 { "status": "ok" }
-🧪 API Testing (Postman)
+
+## 🧪 API Testing (Postman)
 Import the provided Postman collection:
 
 pgsql
