@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: studybuddy_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: studybuddy
+      MYSQL_DATABASE: Study_Buddy
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/2_seed.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  user-service:
+    build: ./services/user-service
+    container_name: studybuddy_user_service
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: studybuddy
+      DB_NAME: Study_Buddy
+      SESSION_SECRET: hellomynameismanasvithisisstudybuddy
+      USER_SERVICE_URL: http://user-service:3001
+      FRONTEND_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  deck-service:
+    build: ./services/deck-service
+    container_name: studybuddy_deck_service
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: studybuddy
+      DB_NAME: Study_Buddy
+      SESSION_SECRET: hellomynameismanasvithisisstudybuddy
+      USER_SERVICE_URL: http://user-service:3001
+      FRONTEND_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  study-service:
+    build: ./services/study-service
+    container_name: studybuddy_study_service
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: studybuddy
+      DB_NAME: Study_Buddy
+      SESSION_SECRET: hellomynameismanasvithisisstudybuddy
+      USER_SERVICE_URL: http://user-service:3001
+      FRONTEND_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  sharing-service:
+    build: ./services/sharing-service
+    container_name: studybuddy_sharing_service
+    ports:
+      - "3004:3004"
+    environment:
+      PORT: 3004
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: studybuddy
+      DB_NAME: Study_Buddy
+      SESSION_SECRET: hellomynameismanasvithisisstudybuddy
+      USER_SERVICE_URL: http://user-service:3001
+      FRONTEND_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: studybuddy_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - user-service
+      - deck-service
+      - study-service
+      - sharing-service
